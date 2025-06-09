@@ -47,7 +47,7 @@ export const SignInForm = () => {
   };
 
   return (
-    <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg">
+    <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
         <CardTitle className="text-4xl">Sign In</CardTitle>
         <CardDescription>Enter credentials to continue.</CardDescription>
@@ -102,13 +102,19 @@ export const SignInForm = () => {
             </Button>
           </form>
         </Form>
-        <Separator className="my-3"/>
+        <Separator className="my-3" />
         <div>
           <div className="flex gap-6 justify-between mt-4">
-            <Link href="/auth/reset" className="text-xs text-gray-600 hover:text-blue-500">
+            <Link
+              href="/auth/reset"
+              className="text-xs text-gray-600 hover:text-blue-500"
+            >
               Forget password?
             </Link>
-            <Link href="/auth/signup" className="text-xs text-gray-600 hover:text-blue-500">
+            <Link
+              href="/auth/signup"
+              className="text-xs text-gray-600 hover:text-blue-500"
+            >
               Create a new acccount.
             </Link>
           </div>
