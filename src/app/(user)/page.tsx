@@ -1,9 +1,8 @@
-import React from 'react'
+import Container from "@/components/ui/container";
+import React from "react";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <Container>Dashboard</Container>;
+};
 
-export default Dashboard
+export default Dashboard;

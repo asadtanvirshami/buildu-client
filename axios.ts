@@ -5,7 +5,7 @@ const VERSION = "v1";
 const PRIVACY = "public";
 
 const api = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${PRIVACY}/api/${VERSION}`,
+  baseURL: `${process.env.BASE_URL}/api/${PRIVACY}/${VERSION}`,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

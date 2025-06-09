@@ -1,16 +1,30 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/ui/theme-provider/provider";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Red_Hat_Display, Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ui/theme-provider/provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const celliad = localFont({
+  src: "../fonts/Celliad.woff",
+  weight: "100 900",
+  variable: "--font-celliad",
+});
+
+const excali = localFont({
+  src: "../fonts/Virgil.woff2",
+  weight: "100 900",
+  variable: "--font-excali",
+});
+
+const redhat = Red_Hat_Display({
+  variable: "--font-redhat",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${redhat.variable} ${poppins.variable} ${excali.variable} ${celliad.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
