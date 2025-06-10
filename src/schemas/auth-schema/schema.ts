@@ -17,3 +17,7 @@ export const signUpSchema = yup.object({
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
 });
+
+export const otpSchema = yup.object({
+  otp: yup.string().required("OTP is required"),
+});

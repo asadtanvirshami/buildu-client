@@ -3,7 +3,7 @@ export const apiEndpoints = {
     login: "/auth/login",
     logout: "/auth/logout",
     signup: "/auth/signup",
-    verifyOtp: "/auth/otp",
+    verifyOtp: "/auth/verify-otp",
     reset: "/auth/reset",
   },
   me: "/auth/me",

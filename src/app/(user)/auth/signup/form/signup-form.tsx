@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,10 +27,12 @@ import { LucideLoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
+import { handleError } from "@/utils/error-handler";
 
 const SignUpForm = () => {
   const router = useRouter();
   const { signup } = useAuth();
+
   const form = useForm<SignUpFormData>({
     resolver: yupResolver(signUpSchema),
     defaultValues: {
@@ -39,19 +43,43 @@ const SignUpForm = () => {
     },
   });
 
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { errors, isSubmitting },
+  } = form;
+
   const onSubmit = async (data: SignUpFormData) => {
-    try {
-      await signup.mutateAsync(
-        { ...data },
-        {
-          onSuccess: () => {
-            router.push("/auth/signin");
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    signup.mutate(
+      { ...data },
+      {
+        onSuccess: (res) => {
+          if (res?.success === false) {
+            setError("root", {
+              type: "server",
+              message: res?.message || "Something went wrong",
+            });
+            return;
+          }
+
+          sessionStorage.setItem("email", res.email);
+          router.push("/auth/otp");
+        },
+        onError: (error) => {
+          handleError(error, {
+            context: "SignupForm",
+            notify: false,
+            setFormError: (msg) => {
+              form.setError("root", {
+                type: "manual",
+                message: msg,
+              });
+            },
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -63,11 +91,11 @@ const SignUpForm = () => {
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
             className="space-y-6 max-w-md mx-auto"
           >
             <FormField
-              control={form.control}
+              control={control}
               name="firstName"
               render={({ field }) => (
                 <FormItem>
@@ -80,11 +108,11 @@ const SignUpForm = () => {
               )}
             />
             <FormField
-              control={form.control}
+              control={control}
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>lastName</FormLabel>
+                  <FormLabel>Last Name</FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="Doe" {...field} />
                   </FormControl>
@@ -93,7 +121,7 @@ const SignUpForm = () => {
               )}
             />
             <FormField
-              control={form.control}
+              control={control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -109,9 +137,8 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
-
             <FormField
-              control={form.control}
+              control={control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -124,28 +151,38 @@ const SignUpForm = () => {
               )}
             />
 
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting || signup.isPending ? (
+            {errors.root?.message && (
+              <div className="text-sm text-red-600 text-center">
+                {errors.root.message}
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isSubmitting || signup.isPending}
+              className="w-full"
+            >
+              {isSubmitting || signup.isPending ? (
                 <React.Fragment>
-                  Signing in
-                  <LucideLoaderCircle size={22} className="animate-spin" />
+                  Signing up
+                  <LucideLoaderCircle size={22} className="animate-spin ml-2" />
                 </React.Fragment>
               ) : (
-                "Sign In"
+                "Sign Up"
               )}
             </Button>
           </form>
         </Form>
-        <Separator className="my-3" />
-        <div>
-          <div className="flex gap-6 justify-between mt-4">
-            <Link
-              href="/auth/signin"
-              className="text-xs text-gray-600 hover:text-blue-500"
-            >
-              Already have an account.
-            </Link>
-          </div>
+
+        <Separator className="my-4" />
+
+        <div className="flex justify-between mt-4">
+          <Link
+            href="/auth/signin"
+            className="text-xs text-gray-600 hover:text-blue-500"
+          >
+            Already have an account.
+          </Link>
         </div>
       </CardContent>
     </Card>
