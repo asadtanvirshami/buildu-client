@@ -20,7 +20,6 @@ export interface SignupInput {
 
 export interface OtpInput {
   [key: string]: string;
-  email: string;
   otp: string;
 }
 

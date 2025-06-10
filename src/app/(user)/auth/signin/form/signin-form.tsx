@@ -28,6 +28,7 @@ import { decodeToken } from "@/utils/jwt";
 import { loginSuccess } from "@/redux/actions/user-action";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { handleError } from "@/utils/error-handler";
 
 /**
  * SignInForm
@@ -50,43 +51,57 @@ export const SignInForm = () => {
       password: "",
     },
   });
+
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { isSubmitting },
+  } = form;
   /**
    * @description Handle form submission, login the user and redirect to dashboard
    * @param {SignInFormData} data Form data
    * @returns {Promise<void>}
    */
   const onSubmit = async (data: SignInFormData) => {
-    try {
-      await login.mutateAsync(
-        { email: data.email, password: data.password },
-        {
-          /**
-           * @description Handle successful login response
-           * @param {SignInResponse} data Response data
-           * @returns {void}
-           */
-          onSuccess: (data) => {
-            if (data.accessToken === null || data.success === false) {
-              form.setError("email", {
-                type: "server",
+    login.mutate(
+      { email: data.email, password: data.password },
+      {
+        /**
+         * @description Handle successful login response
+         * @param {SignInResponse} data Response data
+         * @returns {void}
+         */
+        onSuccess: (data) => {
+          if (data.accessToken === null || data.success === false) {
+            setError("email", {
+              type: "server",
+            });
+            setError("password", {
+              type: "server",
+              message: "Invalid email or password",
+            });
+            return;
+          }
+          const token = decodeToken(data.accessToken);
+          dispatch(loginSuccess(token));
+          router.push("/");
+          form.reset();
+        },
+        onError: (error) => {
+          handleError(error, {
+            context: "SigninForm",
+            notify: false,
+            setFormError: (msg) => {
+              form.setError("root", {
+                type: "manual",
+                message: msg,
               });
-              form.setError("password", {
-                type: "server",
-                message: "Invalid email or password",
-              });
-              return;
-            }
-            const token = decodeToken(data.accessToken);
-            dispatch(loginSuccess(token));
-            router.push("/");
-            form.reset();
-          },
-          onError: (error) => console.error("Login failed:", error),
-        }
-      );
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
+            },
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -98,11 +113,11 @@ export const SignInForm = () => {
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
             className="space-y-6 max-w-md mx-auto"
           >
             <FormField
-              control={form.control}
+              control={control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -120,7 +135,7 @@ export const SignInForm = () => {
             />
 
             <FormField
-              control={form.control}
+              control={control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -134,7 +149,7 @@ export const SignInForm = () => {
             />
 
             <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting || login.isPending ? (
+              {isSubmitting || login.isPending ? (
                 <React.Fragment>
                   Signing in
                   <LucideLoaderCircle size={22} className="animate-spin" />

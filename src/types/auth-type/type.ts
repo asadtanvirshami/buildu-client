@@ -9,3 +9,7 @@ export interface SignUpFormData {
   email: string;
   password: string;
 }
+
+export interface OTPFormData {
+  otp: string;
+}
