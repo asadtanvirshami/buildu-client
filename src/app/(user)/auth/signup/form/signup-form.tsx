@@ -1,7 +1,8 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signInSchema } from "@/schemas/auth-schema/schema";
-import { SignInFormData } from "@/types/auth-type/type";
+import { signUpSchema } from "@/schemas/auth-schema/schema";
+import { SignUpFormData } from "@/types/auth-type/type";
 import { useAuth } from "@/hooks/use-auth";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,71 +22,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LucideLoaderCircle } from "lucide-react";
-import React from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { decodeToken } from "@/utils/jwt";
-import { loginSuccess } from "@/redux/actions/user-action";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
-/**
- * SignInForm
- *
- * @description Form component for signing in.
- *
- * @param {Object} props Component props
- * @param {ReactNode} children Form children
- *
- * @returns {ReactElement} Form element
- */
-export const SignInForm = () => {
+const SignUpForm = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const { login } = useAuth();
-  const form = useForm<SignInFormData>({
-    resolver: yupResolver(signInSchema),
+  const { signup } = useAuth();
+  const form = useForm<SignUpFormData>({
+    resolver: yupResolver(signUpSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
   });
-  /**
-   * @description Handle form submission, login the user and redirect to dashboard
-   * @param {SignInFormData} data Form data
-   * @returns {Promise<void>}
-   */
-  const onSubmit = async (data: SignInFormData) => {
+
+  const onSubmit = async (data: SignUpFormData) => {
     try {
-      await login.mutateAsync(
-        { email: data.email, password: data.password },
+      await signup.mutateAsync(
+        { ...data },
         {
-          /**
-           * @description Handle successful login response
-           * @param {SignInResponse} data Response data
-           * @returns {void}
-           */
-          onSuccess: (data) => {
-            if (data.accessToken === null || data.success === false) {
-              form.setError("email", {
-                type: "server",
-              });
-              form.setError("password", {
-                type: "server",
-                message: "Invalid email or password",
-              });
-              return;
-            }
-            const token = decodeToken(data.accessToken);
-            dispatch(loginSuccess(token));
-            router.push("/");
-            form.reset();
+          onSuccess: () => {
+            router.push("/auth/signin");
           },
-          onError: (error) => console.error("Login failed:", error),
         }
       );
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.log(error);
     }
   };
 
@@ -101,6 +66,32 @@ export const SignInForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 max-w-md mx-auto"
           >
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>lastName</FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -134,7 +125,7 @@ export const SignInForm = () => {
             />
 
             <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting || login.isPending ? (
+              {form.formState.isSubmitting || signup.isPending ? (
                 <React.Fragment>
                   Signing in
                   <LucideLoaderCircle size={22} className="animate-spin" />
@@ -149,16 +140,10 @@ export const SignInForm = () => {
         <div>
           <div className="flex gap-6 justify-between mt-4">
             <Link
-              href="/auth/reset"
+              href="/auth/signin"
               className="text-xs text-gray-600 hover:text-blue-500"
             >
-              Forget password?
-            </Link>
-            <Link
-              href="/auth/signup"
-              className="text-xs text-gray-600 hover:text-blue-500"
-            >
-              Create a new acccount.
+              Already have an account.
             </Link>
           </div>
         </div>
@@ -167,4 +152,4 @@ export const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

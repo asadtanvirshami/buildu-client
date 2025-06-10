@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@react-oauth/google": "^0.12.2",
+    "@reduxjs/toolkit": "^2.8.2",
     "@sentry/nextjs": "^9.27.0",
     "@tanstack/react-query": "^5.80.6",
     "@tanstack/react-query-devtools": "^5.80.6",
@@ -41,6 +42,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.57.0",
     "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0",
     "tailwind-merge": "^3.3.0",
     "yup": "^1.6.1",
     "zod": "^3.25.56"

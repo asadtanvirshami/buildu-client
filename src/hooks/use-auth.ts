@@ -12,7 +12,8 @@ export interface LoginInput {
 
 export interface SignupInput {
   [key: string]: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
