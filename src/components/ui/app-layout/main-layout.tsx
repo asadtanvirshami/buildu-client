@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/ui/app-layout/app-sidbar";
 import React from "react";
 import { usePathname } from "next/navigation";
 import ReactQueryClientProvider from "@/provider/react-query";
+import StoreProvider from "@/redux/store-provider";
 
 export default function MainLayout({
   children,
@@ -17,18 +18,22 @@ export default function MainLayout({
   if (isAuthPath || isProtectedRoute) {
     return (
       <React.Fragment>
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        <StoreProvider>
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        </StoreProvider>
       </React.Fragment>
     );
   }
 
   return (
-    <ReactQueryClientProvider>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarTrigger />
-        <React.Fragment>{children}</React.Fragment>
-      </SidebarProvider>
-    </ReactQueryClientProvider>
+    <StoreProvider>
+      <ReactQueryClientProvider>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarTrigger />
+          <React.Fragment>{children}</React.Fragment>
+        </SidebarProvider>
+      </ReactQueryClientProvider>
+    </StoreProvider>
   );
 }

@@ -1,10 +1,10 @@
-// app/auth/signin/page.tsx
+// app/auth/signup/page.tsx
 "use client";
 
 import React from "react";
-import SignInForm from "@/app/(user)/auth/signin/form/signin-form";
+import SignUpForm from "./form/signup-form";
 
-const SignInPage = () => {
+const SignUpPage = () => {
   return (
     <div className="grid items-center justify-center h-screen w-full">
       <div className="lg:grid bg-gradient-to-r lg:grid-cols-2 xl:grid xl:grid-cols-3 md:grid grid-cols-2 w-screen">
@@ -20,11 +20,11 @@ const SignInPage = () => {
         <div
           className={`flex w-full h-screen align-middle justify-center items-center border-silver-500 shadow-2xl `}
         >
-          <SignInForm />
+          <SignUpForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
