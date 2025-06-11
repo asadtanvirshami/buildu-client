@@ -13,3 +13,7 @@ export interface SignUpFormData {
 export interface OTPFormData {
   otp: string;
 }
+
+export interface RecoveryFormData {
+  email: string;
+}

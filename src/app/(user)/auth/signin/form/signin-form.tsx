@@ -164,7 +164,7 @@ export const SignInForm = () => {
         <div>
           <div className="flex gap-6 justify-between mt-4">
             <Link
-              href="/auth/reset"
+              href="/auth/account-recovery"
               className="text-xs text-gray-600 hover:text-blue-500"
             >
               Forget password?

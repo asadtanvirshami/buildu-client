@@ -21,3 +21,7 @@ export const signUpSchema = yup.object({
 export const otpSchema = yup.object({
   otp: yup.string().required("OTP is required"),
 });
+
+export const recoverySchema = yup.object({
+  email: yup.string().email("Invalid email").required("Email is required"),
+});
