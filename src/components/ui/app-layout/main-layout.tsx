@@ -15,13 +15,27 @@ export default function MainLayout({
   const isAuthPath = path.startsWith("/auth");
   const isProtectedRoute = path.startsWith("/protected-route/");
 
-  if (isAuthPath || isProtectedRoute) {
+  if (isAuthPath) {
     return (
       <React.Fragment>
         <StoreProvider>
           <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
         </StoreProvider>
       </React.Fragment>
+    );
+  }
+
+  if (isProtectedRoute) {
+    return (
+      <StoreProvider>
+        <ReactQueryClientProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarTrigger />
+            <React.Fragment>{children}</React.Fragment>
+          </SidebarProvider>
+        </ReactQueryClientProvider>
+      </StoreProvider>
     );
   }
 

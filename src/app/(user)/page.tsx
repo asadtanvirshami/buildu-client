@@ -1,8 +1,8 @@
 import Container from "@/components/ui/container";
-import React from "react";
+import React,{memo} from "react";
 
 const Dashboard = () => {
   return <Container>Dashboard</Container>;
 };
 
-export default Dashboard;
+export default memo(Dashboard);
