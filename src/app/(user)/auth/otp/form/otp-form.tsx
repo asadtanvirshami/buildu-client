@@ -26,13 +26,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LucideLoaderCircle } from "lucide-react";
-import React from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { handleError } from "@/utils/error-handler";
+import { useRouter } from "next/navigation";
 
 const OtpForm = () => {
-  const { verifyOtp } = useAuth();
+  const { verifyOtp, resendOtp } = useAuth();
+  const router = useRouter();
+
+  const [otpSent, setOtpSent] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+
   const form = useForm<OTPFormData>({
     resolver: yupResolver(otpSchema),
     defaultValues: {
@@ -46,17 +51,42 @@ const OtpForm = () => {
     formState: { errors, isSubmitting },
   } = form;
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (otpSent) {
+      setTimeLeft(60); // 60 seconds
+
+      timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setOtpSent(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [otpSent]);
+
   const onSubmit = async (data: OTPFormData) => {
     verifyOtp.mutate(
       { otp: data.otp },
       {
         onSuccess: (res) => {
+          console.log(res);
+
           if (res.success === false) {
             setError("root", {
               type: "server",
               message: res.message || "Something went wrong",
             });
           }
+          sessionStorage.removeItem("email");
+          router.push("/");
         },
         onError: (error) => {
           handleError(error, {
@@ -73,7 +103,38 @@ const OtpForm = () => {
       }
     );
   };
-  
+
+  const onResend = async () => {
+    const email = sessionStorage.getItem("email")?.toString();
+    resendOtp.mutate(
+      { email: email || "" },
+      {
+        onSuccess: (res) => {
+          if (res.success === false) {
+            setError("root", {
+              type: "server",
+              message: res.message || "Something went wrong",
+            });
+            return;
+          }
+          setOtpSent(true);
+        },
+        onError: (error) => {
+          handleError(error, {
+            context: "OtpForm",
+            notify: false,
+            setFormError: (msg) => {
+              form.setError("root", {
+                type: "manual",
+                message: msg,
+              });
+            },
+          });
+        },
+      }
+    );
+  };
+
   return (
     <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
@@ -130,21 +191,33 @@ const OtpForm = () => {
         <Separator className="my-3" />
         <div>
           <div className="flex gap-6 justify-between mt-4">
-            <Link
-              href="/auth/reset"
+            <Button
+              type="button"
+              variant={"link"}
+              disabled={timeLeft > 0}
+              onClick={onResend}
               className="text-xs text-gray-600 hover:text-blue-500"
             >
               resend OTP
-            </Link>
+            </Button>
           </div>
         </div>
       </CardContent>
       <CardFooter>
-        {errors.root?.message && (
-          <div className="text-sm text-red-600 text-center">
-            {errors.root.message}
+        <div className="row">
+          {errors.root?.message && (
+            <div className="text-xs text-red-600 text-center">
+              {errors.root.message}
+            </div>
+          )}
+          <div>
+            {otpSent && (
+              <div className="text-xs text-center">
+                OTP sent successfully. Retry after {timeLeft} seconds.
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </CardFooter>
     </Card>
   );

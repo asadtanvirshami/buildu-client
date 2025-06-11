@@ -3,8 +3,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signUpSchema } from "@/schemas/auth-schema/schema";
-import { SignUpFormData } from "@/types/auth-type/type";
+import { recoverySchema } from "@/schemas/auth-schema/schema";
+import { RecoveryFormData } from "@/types/auth-type/type";
 import { useAuth } from "@/hooks/use-auth";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,17 +29,14 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { handleError } from "@/utils/error-handler";
 
-const SignUpForm = () => {
+const RecoveryForm = () => {
   const router = useRouter();
-  const { signup } = useAuth();
+  const { account_recovery } = useAuth();
 
-  const form = useForm<SignUpFormData>({
-    resolver: yupResolver(signUpSchema),
+  const form = useForm<RecoveryFormData>({
+    resolver: yupResolver(recoverySchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
       email: "",
-      password: "",
     },
   });
 
@@ -50,9 +47,9 @@ const SignUpForm = () => {
     formState: { errors, isSubmitting },
   } = form;
 
-  const onSubmit = async (data: SignUpFormData) => {
-    signup.mutate(
-      { ...data },
+  const onSubmit = async (data: RecoveryFormData) => {
+    account_recovery.mutate(
+      { email: data.email },
       {
         onSuccess: (res) => {
           if (res?.success === false) {
@@ -62,13 +59,12 @@ const SignUpForm = () => {
             });
             return;
           }
-
-          sessionStorage.setItem("email", res.email);
+          sessionStorage.setItem("email", data.email);
           router.push("/auth/otp");
         },
         onError: (error) => {
           handleError(error, {
-            context: "SignupForm",
+            context: "accountRecoveryForm",
             notify: false,
             setFormError: (msg) => {
               form.setError("root", {
@@ -85,8 +81,10 @@ const SignUpForm = () => {
   return (
     <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
-        <CardTitle className="text-4xl">Sign In</CardTitle>
-        <CardDescription>Enter credentials to continue.</CardDescription>
+        <CardTitle className="text-4xl">Account Recovery</CardTitle>
+        <CardDescription>
+          Enter your email address associated with your account to continue.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -96,32 +94,6 @@ const SignUpForm = () => {
           >
             <FormField
               control={control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="John" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input type="text" placeholder="Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -129,7 +101,7 @@ const SignUpForm = () => {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="abc@gmail.com"
                       {...field}
                     />
                   </FormControl>
@@ -137,38 +109,23 @@ const SignUpForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {errors.root?.message && (
-              <div className="text-xs text-red-600 text-center">
+              <div className="text-sm text-red-600 text-center">
                 {errors.root.message}
               </div>
             )}
 
             <Button
               type="submit"
-              disabled={isSubmitting || signup.isPending}
-              className="w-full"
+              disabled={isSubmitting || account_recovery.isPending}
             >
-              {isSubmitting || signup.isPending ? (
+              {isSubmitting || account_recovery.isPending ? (
                 <React.Fragment>
-                  Signing up
+                  Finding
                   <LucideLoaderCircle size={22} className="animate-spin ml-2" />
                 </React.Fragment>
               ) : (
-                "Sign Up"
+                "Continue"
               )}
             </Button>
           </form>
@@ -189,4 +146,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default RecoveryForm;

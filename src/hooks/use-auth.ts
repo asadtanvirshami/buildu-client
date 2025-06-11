@@ -29,6 +29,14 @@ export interface ResetPasswordInput {
   otp: string;
   newPassword: string;
 }
+export interface AccountRecoveryInput {
+  [key: string]: string;
+  email: string;
+}
+export interface ResendOTPInput {
+  [key: string]: string;
+  email: string;
+}
 
 export const useAuth = () => {
   const login = useMutation({
@@ -45,10 +53,24 @@ export const useAuth = () => {
         .then((res: AxiosResponse) => res.data),
   });
 
+  const account_recovery = useMutation({
+    mutationFn: (input: AccountRecoveryInput) =>
+      api
+        .post(apiEndpoints.auth.account_recovery, sanitizeFlatStrings(input))
+        .then((res: AxiosResponse) => res.data),
+  });
+
   const verifyOtp = useMutation({
     mutationFn: (input: OtpInput) =>
       api
         .post(apiEndpoints.auth.verifyOtp, sanitizeFlatStrings(input))
+        .then((res: AxiosResponse) => res.data),
+  });
+
+  const resendOtp = useMutation({
+    mutationFn: (input: ResendOTPInput) =>
+      api
+        .post(apiEndpoints.auth.resendOtp, sanitizeFlatStrings(input))
         .then((res: AxiosResponse) => res.data),
   });
 
@@ -64,5 +86,7 @@ export const useAuth = () => {
     signup,
     verifyOtp,
     resetPassword,
+    account_recovery,
+    resendOtp,
   };
 };
