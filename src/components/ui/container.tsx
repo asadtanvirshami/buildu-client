@@ -8,10 +8,9 @@ const Container = ({
   className?: string;
 }) => {
   return (
-    <div className=" w-full flex justify-center items-center">
-      <div className={`${className}container flex justify-center`}>
-        {children}
-      </div>
+
+    <div className={`${className}container w-full flex justify-center`}>
+      {children}
     </div>
   );
 };

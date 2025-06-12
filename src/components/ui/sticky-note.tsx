@@ -172,7 +172,7 @@ export default function StickyNotesGrid({ limit = 4 }: StickyNotesGridProps) {
 
             <div
                 ref={gridRef}
-                className="p-4 h-[400px] overflow-hidden relative shadow-lg rounded-md"
+                className="p-4 h-full w-min gap-4 relative"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
             >

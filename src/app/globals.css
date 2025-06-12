@@ -228,13 +228,33 @@
   }
 }
 
-.fade-in          { animation: fade-in 0.5s ease-out forwards; }
-.fade-out         { animation: fade-out 0.5s ease-out forwards; }
-.fade-up          { animation: fade-up 0.5s ease-out forwards; }
-.fade-down        { animation: fade-down 0.5s ease-out forwards; }
-.fade-left        { animation: fade-left 0.5s ease-out forwards; }
-.fade-right       { animation: fade-right 0.5s ease-out forwards; }
-.fade-in-zoom     { animation: fade-in-zoom 0.5s ease-out forwards; }
-.fade-in-rotate   { animation: fade-in-rotate 0.5s ease-out forwards; }
-.fade-in-up-left  { animation: fade-in-up-left 0.5s ease-out forwards; }
-.fade-in-up-right { animation: fade-in-up-right 0.5s ease-out forwards; }
+.fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+.fade-out {
+  animation: fade-out 0.5s ease-out forwards;
+}
+.fade-up {
+  animation: fade-up 0.5s ease-out forwards;
+}
+.fade-down {
+  animation: fade-down 0.5s ease-out forwards;
+}
+.fade-left {
+  animation: fade-left 0.5s ease-out forwards;
+}
+.fade-right {
+  animation: fade-right 0.5s ease-out forwards;
+}
+.fade-in-zoom {
+  animation: fade-in-zoom 0.5s ease-out forwards;
+}
+.fade-in-rotate {
+  animation: fade-in-rotate 0.5s ease-out forwards;
+}
+.fade-in-up-left {
+  animation: fade-in-up-left 0.5s ease-out forwards;
+}
+.fade-in-up-right {
+  animation: fade-in-up-right 0.5s ease-out forwards;
+}
