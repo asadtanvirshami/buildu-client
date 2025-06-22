@@ -5,6 +5,8 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import ReactQueryClientProvider from "@/provider/react-query";
 import StoreProvider from "@/redux/store-provider";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export default function MainLayout({
   children,
@@ -32,7 +34,9 @@ export default function MainLayout({
           <SidebarProvider>
             <AppSidebar />
             <SidebarTrigger />
-            <React.Fragment>{children}</React.Fragment>
+            <DndProvider backend={HTML5Backend}>
+              <React.Fragment>{children}</React.Fragment>
+            </DndProvider>
           </SidebarProvider>
         </ReactQueryClientProvider>
       </StoreProvider>

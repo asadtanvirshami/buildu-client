@@ -31,6 +31,14 @@ import { Separator } from "@/components/ui/separator";
 import { handleError } from "@/utils/error-handler";
 import { useRouter } from "next/navigation";
 
+/**
+ * A form to verify the OTP sent to the user's email.
+ *
+ * It will automatically redirect to the homepage if the OTP is correct.
+ *
+ * @returns A form with an OTP input field and a button to resend the OTP.
+ */
+
 const OtpForm = () => {
   const { verifyOtp, resendOtp } = useAuth();
   const router = useRouter();
@@ -72,6 +80,16 @@ const OtpForm = () => {
     return () => clearInterval(timer);
   }, [otpSent]);
 
+  /**
+   * Submits the OTP form.
+   *
+   * If the OTP is valid, it will remove the email from the session storage and
+   * redirect to the homepage.
+   *
+   * If the OTP is invalid, it will display an error message.
+   *
+   * @param data - The OTP form data.
+   */
   const onSubmit = async (data: OTPFormData) => {
     verifyOtp.mutate(
       { otp: data.otp },

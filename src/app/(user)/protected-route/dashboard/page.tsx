@@ -2,33 +2,32 @@
 
 "use client";
 import React, { memo } from "react";
-import DraggableNote from "@/components/ui/sticky-note";
-import { CalendarWidget } from "./widgets/calendar.widget";
-import { DataTableDemo } from "./widgets/tasks.widget";
-import { LucideFocus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import IntroductionWidget from "./widgets/introduction.widget";
+// import { taskData } from "@/mocks/data";
+import TodoWidget from "./widgets/todo.widget";
+import NotesWidget from "./widgets/notes.widget";
+import TaskWidget from "./widgets/task.widget";
+
+
 
 const Dashboard = () => {
+  // stickyboard widget
+  // const filteredTaskData = taskData.map(task => ({ ...task, dueDate: task.dueDate || '' }));
   return (
     <div
-      className="w-full flex-col mt-12 justify-center space-y-8 space-x-8 items-center m-auto"
+      className="w-screen h-screen container mt-12 justify-center space-y-8  items-center m-auto"
     >
+      <IntroductionWidget />
       <div>
-        <Button className="flex items-center justify-center bg-rose-500 text-white" >Focus Mode<LucideFocus className="w-6 h-6" /></Button>
+        <NotesWidget />
       </div>
-      <div>
-        <div className="w-full fade-up h-[20rem] bg-card shadow-lg rounded-xl " />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-card fade-up px-4 py-4 rounded-xl shadow-lg">
-          <CalendarWidget />
+      <div className="w-full flex">
+        <div className="w-fit">
+          <TodoWidget />
         </div>
-        <div className="bg-card fade-up px-4 rounded-xl shadow-lg">
-          <DataTableDemo />
+        <div className="w-[50rem] ">
+          <TaskWidget />
         </div>
-      </div>
-      <div>
-        <DraggableNote limit={3} />
       </div>
     </div >
   );
