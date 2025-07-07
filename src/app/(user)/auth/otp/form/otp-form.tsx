@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { otpSchema } from "@/schemas/auth-schema/schema";
 import { OTPFormData } from "@/types/auth-type/type";
-import { useAuth } from "@/hooks/use-auth";
+import { useResendOtp, useVerifyOtp } from "@/hooks/auth/use-auth";
 import {
   InputOTP,
   InputOTPGroup,
@@ -40,7 +40,8 @@ import { useRouter } from "next/navigation";
  */
 
 const OtpForm = () => {
-  const { verifyOtp, resendOtp } = useAuth();
+  const resendOtp = useResendOtp();
+  const verifyOtp = useVerifyOtp();
   const router = useRouter();
 
   const [otpSent, setOtpSent] = useState<boolean>(false);
@@ -122,6 +123,10 @@ const OtpForm = () => {
     );
   };
 
+  /**
+   * @description Handle resend OTP button click
+   * @returns {Promise<void>}
+   */
   const onResend = async () => {
     const email = sessionStorage.getItem("email")?.toString();
     resendOtp.mutate(
@@ -156,7 +161,7 @@ const OtpForm = () => {
   return (
     <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
-        <CardTitle className="text-4xl">Verify OTP</CardTitle>
+        <CardTitle className="text-4x !text-pink-400">Verify OTP</CardTitle>
         <CardDescription>
           Enter your otp that was sent on your email.
         </CardDescription>

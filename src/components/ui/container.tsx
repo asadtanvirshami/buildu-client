@@ -9,7 +9,7 @@ const Container = ({
 }) => {
   return (
 
-    <div className={`${className}container w-full h-full flex justify-center`}>
+    <div className={`${className} container w-full h-full flex `}>
       {children}
     </div>
   );

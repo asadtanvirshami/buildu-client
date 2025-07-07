@@ -1,0 +1,51 @@
+{
+    "nav_cta": "Sign In",
+
+    "hero_title": "Optimize your trading with effective visual backtesting.",
+    "hero_desc": "Analyze, record and improve operations with real data & accurate tools.",
+    "hero_cta": "Subscribe",
+
+    "overview_title01": "One Platform.",
+    "overview_title02": " All Your Trading Tools.",
+    "overview_dec": "TradingBacktesting is the ultimate all-in-one solution for traders and investors. Backtest your strategies, get live news, calculate lot sizes, stay synced with MetaTrader, track calendars, and much more everything you need, in one powerful platform. TradingBacktesting equips you with every essential tool in one intuitive dashboard eliminating the need to juggle between multiple apps or services.",
+    "overview_cta01": "Join",
+    "overview_cta02": "Explore Features",
+
+    "offers_title": "What We Offer",
+    "features_title01": "Strategy Backtesting",
+    "features_desc01": "Simulate and validate your trading strategies using historical market data across various timeframes and asset classes.",
+    "features_title02": "Real-Time Market News",
+    "features_desc02": "Stay ahead with up-to-the-minute financial news and updates from global markets.",
+    "features_title03": "Economic Calendars & Events",
+    "features_desc03": "Track upcoming economic releases, central bank decisions, and market-moving events for better planning.",
+    "features_title04": "MetaTrader Integration",
+    "features_desc04": "Seamlessly sync with MT4/MT5 to mirror trades, import data, and manage positions from one platform.",
+    "features_title05": "Lot Size & Risk Calculators",
+    "features_desc05": "Calculate lot sizes, pip values, and risk percentages based on your account balance and strategy.",
+    "features_title06": "Performance Analytics",
+    "features_desc06": "Analyze your trade history, spot patterns, and generate detailed performance reports.",
+
+    "start_now": "Start Improving Your Trading With Us",
+    "start_now_cta": "Start Now",
+
+    "team_title01": "Meet ",
+    "team_title02": "Our Team",
+
+    "faqs_title_main01": "Frequently",
+    "faqs_title_main02": "Asked Questions",
+    
+    "faqs_title01": "What is TradingBacktesting?",
+    "faqs_desc01": "TradingBacktesting is a platform that allows you to backtest your trading strategies using historical market data.",
+    "faqs_title02": "Can I connect my MetaTrader account?",
+    "faqs_desc02": "Yes, you can seamlessly connect your MetaTrader 4 or 5 account to mirror trades, import account history, and track real-time performance within the platform.",
+    "faqs_title03": "Is live economic news included?",
+    "faqs_desc03": "Absolutely. TradingBacktesting provides real-time financial news and an integrated economic calendar to help you stay on top of market-moving events.",
+    "faqs_title04": "Can I calculate lot sizes and risk?",
+    "faqs_desc04": "Yes, TradingBacktesting includes tools to calculate optimal lot sizes and risk management based on your account balance and strategy.",
+    "faqs_title05": "Is this platform suitable for beginners?",
+    "faqs_desc05": "Yes! TradingBacktesting is designed for both beginners and professionals. The interface is user-friendly and packed with tutorials to help you get started.",
+    "faqs_title06":"Do you offer a free trial?",
+    "faqs_desc06":"We do! You can try TradingBacktesting free for 7 days with full access to all features—no credit card required.",
+    "faqs_title07":"Is my data secure?",
+    "faqs_desc07":"We take data security seriously. All account information and trading data are encrypted and stored securely with best-in-class protocols."
+}

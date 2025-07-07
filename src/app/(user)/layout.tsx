@@ -19,9 +19,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   //       </div>
   //     </div>
   //   </div>
-  return <MainLayout>
-    <React.Fragment>{children}</React.Fragment>
-  </MainLayout>;
+  return (
+    <MainLayout>
+      <div>{children}</div>
+    </MainLayout>
+  )
 };
 
 export default memo(Layout);

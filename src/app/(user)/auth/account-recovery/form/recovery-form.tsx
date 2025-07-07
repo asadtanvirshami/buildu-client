@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { recoverySchema } from "@/schemas/auth-schema/schema";
 import { RecoveryFormData } from "@/types/auth-type/type";
-import { useAuth } from "@/hooks/use-auth";
+import { useAccountRecovery } from "@/hooks/auth/use-auth";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -31,7 +31,7 @@ import { handleError } from "@/utils/error-handler";
 
 const RecoveryForm = () => {
   const router = useRouter();
-  const { account_recovery } = useAuth();
+  const account_recovery = useAccountRecovery()
 
   const form = useForm<RecoveryFormData>({
     resolver: yupResolver(recoverySchema),
@@ -47,6 +47,11 @@ const RecoveryForm = () => {
     formState: { errors, isSubmitting },
   } = form;
 
+  /**
+   * @description Handle form submission, send a recovery link to the user and redirect to OTP page
+   * @param {RecoveryFormData} data Form data
+   * @returns {Promise<void>}
+   */
   const onSubmit = async (data: RecoveryFormData) => {
     account_recovery.mutate(
       { email: data.email },
@@ -81,7 +86,7 @@ const RecoveryForm = () => {
   return (
     <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
-        <CardTitle className="text-4xl">Account Recovery</CardTitle>
+        <CardTitle className="text-4xl !text-pink-400">Account Recovery</CardTitle>
         <CardDescription>
           Enter your email address associated with your account to continue.
         </CardDescription>
