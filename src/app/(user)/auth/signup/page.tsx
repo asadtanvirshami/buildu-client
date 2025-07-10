@@ -3,14 +3,10 @@
 
 import React from "react";
 import SignUpForm from "./form/signup-form";
-import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import dark_logo from "../../../../../public/assets/dark.png";
-import light_logo from "../../../../../public/assets/light.png";
-
 const SignUpPage = () => {
-  const theme = useTheme()
+  const theme = useTheme();
   return (
     <div className="grid items-center justify-center h-screen w-full">
       <div className="lg:grid bg-gradient-to-r lg:grid-cols-2 xl:grid xl:grid-cols-3 md:grid grid-cols-2 w-screen">
@@ -18,7 +14,9 @@ const SignUpPage = () => {
           className={`hidden sm:flex h-screen align-middle bg-gradient-to-r justify-center items-center xl:col-span-2`}
         >
           <div className="justify-center flex-col flex align-middle items-center">
-            <Image src={theme.theme === "dark" ? dark_logo : light_logo} alt="Logo" className="w-[20rem]" />
+            <h1 className=" md:text-[9rem] lg:text-[9.5rem] xl:text-[18rem] fade-up font-[family-name:var(--font-celliad)]">
+              BuildU
+            </h1>
           </div>
         </div>
         <div
