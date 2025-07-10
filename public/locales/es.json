@@ -1,0 +1,51 @@
+{
+    "nav_cta": "Iniciar sesión",
+
+    "hero_title": "Optimiza tu trading con pruebas visuales efectivas.",
+    "hero_desc": "Analiza, registra y mejora tus operaciones con datos reales y herramientas precisas.",
+    "hero_cta": "Suscribirse",
+
+    "overview_title01": "Una plataforma.",
+    "overview_title02": "Todas tus herramientas de trading.",
+    "overview_dec": "TradingBacktesting es la solución definitiva todo-en-uno para traders e inversionistas. Realiza pruebas de tus estrategias, obtén noticias en vivo, calcula tamaños de lote, mantente sincronizado con MetaTrader, sigue los calendarios y mucho más: todo lo que necesitas, en una poderosa plataforma. TradingBacktesting te equipa con todas las herramientas esenciales en un panel intuitivo, eliminando la necesidad de alternar entre múltiples aplicaciones o servicios.",
+    "overview_cta01": "Unirse",
+    "overview_cta02": "Explorar características",
+
+    "offers_title": "Lo que ofrecemos",
+    "features_title01": "Pruebas de estrategias",
+    "features_desc01": "Simula y valida tus estrategias de trading utilizando datos históricos de mercado en diferentes marcos temporales y clases de activos.",
+    "features_title02": "Noticias del mercado en tiempo real",
+    "features_desc02": "Mantente adelante con noticias financieras de última hora y actualizaciones de los mercados globales.",
+    "features_title03": "Calendarios económicos y eventos",
+    "features_desc03": "Sigue los próximos lanzamientos económicos, decisiones de bancos centrales y eventos que mueven el mercado para una mejor planificación.",
+    "features_title04": "Integración con MetaTrader",
+    "features_desc04": "Sincroniza sin problemas con MT4/MT5 para reflejar operaciones, importar datos y gestionar posiciones desde una sola plataforma.",
+    "features_title05": "Calculadoras de tamaño de lote y riesgo",
+    "features_desc05": "Calcula tamaños de lote, valores de pips y porcentajes de riesgo basados en el saldo de tu cuenta y tu estrategia.",
+    "features_title06": "Análisis de rendimiento",
+    "features_desc06": "Analiza tu historial de operaciones, detecta patrones y genera informes detallados de rendimiento.",
+
+    "start_now": "Comienza a mejorar tu trading con nosotros",
+    "start_now_cta": "Comienza ahora",
+
+    "team_title01": "Conoce a ",
+    "team_title02": "Nuestro Equipo",
+
+    "faqs_title_main01": "Preguntas",
+    "faqs_title_main02": "frecuentes",
+
+    "faqs_title01": "¿Qué es TradingBacktesting?",
+    "faqs_desc01": "TradingBacktesting es una plataforma que te permite realizar pruebas de tus estrategias de trading utilizando datos históricos de mercado.",
+    "faqs_title02": "¿Puedo conectar mi cuenta de MetaTrader?",
+    "faqs_desc02": "Sí, puedes conectar fácilmente tu cuenta de MetaTrader 4 o 5 para reflejar operaciones, importar el historial de tu cuenta y seguir el rendimiento en tiempo real dentro de la plataforma.",
+    "faqs_title03": "¿Está incluida la noticia económica en vivo?",
+    "faqs_desc03": "¡Absolutamente! TradingBacktesting proporciona noticias financieras en tiempo real y un calendario económico integrado para ayudarte a estar al tanto de los eventos que mueven el mercado.",
+    "faqs_title04": "¿Puedo calcular tamaños de lote y riesgo?",
+    "faqs_desc04": "Sí, TradingBacktesting incluye herramientas para calcular tamaños de lote óptimos y la gestión de riesgos según el saldo de tu cuenta y tu estrategia.",
+    "faqs_title05": "¿Es adecuada esta plataforma para principiantes?",
+    "faqs_desc05": "¡Sí! TradingBacktesting está diseñado tanto para principiantes como para profesionales. La interfaz es fácil de usar y está llena de tutoriales para ayudarte a empezar.",
+    "faqs_title06": "¿Ofrecen una prueba gratuita?",
+    "faqs_desc06": "¡Sí! Puedes probar TradingBacktesting de forma gratuita durante 7 días con acceso completo a todas las funciones, sin necesidad de tarjeta de crédito.",
+    "faqs_title07": "¿Está segura mi información?",
+    "faqs_desc07": "Nos tomamos la seguridad de los datos muy en serio. Toda la información de cuenta y datos de trading están encriptados y almacenados de manera segura con los mejores protocolos de seguridad."
+}

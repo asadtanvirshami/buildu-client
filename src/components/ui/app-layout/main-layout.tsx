@@ -5,6 +5,9 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import ReactQueryClientProvider from "@/provider/react-query";
 import StoreProvider from "@/redux/store-provider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import Header from "../header";
+import Footer from "../footer";
 
 export default function MainLayout({
   children,
@@ -17,11 +20,13 @@ export default function MainLayout({
 
   if (isAuthPath) {
     return (
-      <React.Fragment>
+      <GoogleOAuthProvider
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}
+      >
         <StoreProvider>
           <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
         </StoreProvider>
-      </React.Fragment>
+      </GoogleOAuthProvider>
     );
   }
 
@@ -32,7 +37,7 @@ export default function MainLayout({
           <SidebarProvider>
             <AppSidebar />
             <SidebarTrigger />
-            <React.Fragment>{children}</React.Fragment>
+            {children}
           </SidebarProvider>
         </ReactQueryClientProvider>
       </StoreProvider>
@@ -42,11 +47,9 @@ export default function MainLayout({
   return (
     <StoreProvider>
       <ReactQueryClientProvider>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarTrigger />
-          <React.Fragment>{children}</React.Fragment>
-        </SidebarProvider>
+        <Header />
+        {children}
+        <Footer />
       </ReactQueryClientProvider>
     </StoreProvider>
   );

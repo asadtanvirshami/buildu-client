@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signInSchema } from "@/schemas/auth-schema/schema";
 import { SignInFormData } from "@/types/auth-type/type";
-import { useAuth } from "@/hooks/use-auth";
+import { useGoogleSignin } from "@/hooks/auth/use-auth";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -24,12 +24,13 @@ import { LucideLoaderCircle } from "lucide-react";
 import React from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { decodeToken } from "@/utils/jwt";
 import { loginSuccess } from "@/redux/actions/user-action";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { handleError } from "@/utils/error-handler";
-
+import { useUser } from "@/hooks/user/use-user";
+import { useSignin } from "@/hooks/auth/use-auth";
 /**
  * SignInForm
  *
@@ -42,8 +43,10 @@ import { handleError } from "@/utils/error-handler";
  */
 export const SignInForm = () => {
   const router = useRouter();
+  const signin = useSignin();
+  const googleSignin = useGoogleSignin();
   const dispatch = useDispatch();
-  const { login } = useAuth();
+  const { refetch } = useUser();
   const form = useForm<SignInFormData>({
     resolver: yupResolver(signInSchema),
     defaultValues: {
@@ -58,13 +61,14 @@ export const SignInForm = () => {
     setError,
     formState: { isSubmitting },
   } = form;
+
   /**
    * @description Handle form submission, login the user and redirect to dashboard
    * @param {SignInFormData} data Form data
    * @returns {Promise<void>}
    */
   const onSubmit = async (data: SignInFormData) => {
-    login.mutate(
+    signin.mutate(
       { email: data.email, password: data.password },
       {
         /**
@@ -72,7 +76,7 @@ export const SignInForm = () => {
          * @param {SignInResponse} data Response data
          * @returns {void}
          */
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           if (data.accessToken === null || data.success === false) {
             setError("email", {
               type: "server",
@@ -83,14 +87,19 @@ export const SignInForm = () => {
             });
             return;
           }
-          const token = decodeToken(data.accessToken);
-          dispatch(loginSuccess(token));
-          router.push("/");
-          form.reset();
+
+          const result = await refetch();
+          if (result.isError) return;
+
+          if (result.data.valid && result.data.user) {
+            dispatch(loginSuccess(result.data.user));
+            router.push("/protected-route/dashboard");
+            form.reset();
+          }
         },
         onError: (error) => {
           handleError(error, {
-            context: "SigninForm",
+            context: "Signin-Form",
             notify: false,
             setFormError: (msg) => {
               form.setError("root", {
@@ -104,10 +113,67 @@ export const SignInForm = () => {
     );
   };
 
+  /**
+   * @description Handle successful response from Google Sign-in
+   * @param {GoogleCredentialResponse} credentialResponse Response from Google
+   * @returns {Promise<void>}
+   */
+  const handleGoogleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
+    if (!credentialResponse?.credential) return;
+
+    const googleCredentials = credentialResponse.credential;
+    googleSignin.mutate(
+      { token: googleCredentials },
+      {
+        onSuccess: async (data) => {
+          if (data.accessToken === null || data.success === false) {
+            return;
+          }
+
+          const result = await refetch();
+          if (result.isError) return;
+
+          dispatch(loginSuccess(result.data.user));
+          router.push("/");
+        },
+        onError: (error) => {
+          handleError(error, {
+            context: "Signin-Form",
+            notify: false,
+            setFormError: (msg) => {
+              form.setError("root", {
+                type: "manual",
+                message: msg,
+              });
+            },
+          });
+        }
+      }
+    );
+  };
+
+  /**
+   * @description Handle an error from the Google Sign-in
+   * @returns {void}
+   */
+  const handleGoogleError = () => {
+    handleError("Google-Signin-Error", {
+      context: "Google-Signin",
+      notify: false,
+      setFormError: (msg) => {
+        form.setError("root", {
+          type: "manual",
+          message: msg,
+        });
+      },
+    });
+
+  };
+
   return (
     <Card className="w-[28rem] font-[family-name:var(--font-poppins)] shadow-lg fade-left">
       <CardHeader>
-        <CardTitle className="text-4xl">Sign In</CardTitle>
+        <CardTitle className="text-4xl !text-pink-400">Sign In</CardTitle>
         <CardDescription>Enter credentials to continue.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -147,17 +213,28 @@ export const SignInForm = () => {
                 </FormItem>
               )}
             />
+            <div className="flex flex-col">
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {isSubmitting || signin.isPending ? (
+                  <React.Fragment>
+                    Signing in
+                    <LucideLoaderCircle size={22} className="animate-spin" />
+                  </React.Fragment>
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
 
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {isSubmitting || login.isPending ? (
-                <React.Fragment>
-                  Signing in
-                  <LucideLoaderCircle size={22} className="animate-spin" />
-                </React.Fragment>
-              ) : (
-                "Sign In"
-              )}
-            </Button>
+              <div className="flex justify-center mt-5">
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  useOneTap
+                />
+              </div>
+            </div>
+
+
           </form>
         </Form>
         <Separator className="my-3" />
@@ -167,7 +244,7 @@ export const SignInForm = () => {
               href="/auth/account-recovery"
               className="text-xs text-gray-600 hover:text-blue-500"
             >
-              Forget password?
+              Forgot password?
             </Link>
             <Link
               href="/auth/signup"

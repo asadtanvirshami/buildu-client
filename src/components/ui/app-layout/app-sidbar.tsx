@@ -2,20 +2,20 @@
 
 import * as React from "react";
 import {
+  Award,
+  Book,
   BookOpen,
-  Bot,
-  Command,
+  Calculator,
+  CandlestickChart,
+  Dock,
   Frame,
   LifeBuoy,
-  Map,
-  PieChart,
   Send,
   Settings2,
-  SquareTerminal,
+  Target,
 } from "lucide-react";
 
 import { NavMain } from "@/components/ui/app-layout/nav-main";
-import { NavProjects } from "@/components/ui/app-layout/nav-projects";
 import { NavSecondary } from "@/components/ui/app-layout/nav-secondary";
 import { NavUser } from "@/components/ui/app-layout/nav-user";
 import {
@@ -29,74 +29,83 @@ import {
 } from "@/components/ui/sidebar";
 import { ModeToggle } from "../theme-provider/toggle-button";
 
+// import dark_logo from "../../../../public/assets/dark.png";
+// import light_logo from "../../../../public/assets/light.png";
+import Image from "next/image";
+import { useTheme } from "next-themes";
+
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "John Davis",
+    email: "john@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
-      title: "Playground",
+      title: "Dashboard",
       url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      icon: Dock,
+      // isActive: true,
+      // items: [
+      //   {
+      //     title: "History",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Starred",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Settings",
+      //     url: "#",
+      //   },
+      // ],
     },
     {
-      title: "Models",
+      title: "Operations",
       url: "#",
-      icon: Bot,
+      icon: Target,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Orders", url: "#",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+          title: "Portfolios", url: "#",
+        }
+      ]
     },
     {
-      title: "Documentation",
+      title: "Strategy",
+      url: "#",
+      icon: Frame,
+    },
+    {
+      title: "Trading Journal",
+      url: "#",
+      icon: Book,
+    },
+    {
+      title: "Patterns",
+      url: "#",
+      icon: CandlestickChart,
+    },
+    {
+      title: "Learning",
       url: "#",
       icon: BookOpen,
+    },
+    {
+      title: "Rewards",
+      url: "#",
+      icon: Award,
+    },
+    {
+      title: "Tools",
+      url: "#",
+      icon: Calculator,
       items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+        { title: "Lot Size Calculator", url: "#" },
+      ]
     },
     {
       title: "Settings",
@@ -134,41 +143,23 @@ const data = {
       icon: Send,
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const theme = useTheme()
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+              <div className="flex items-center gap-2">
+                {/* <Image src={theme.theme === "dark" ? dark_logo : light_logo} alt="Logo" width={50} height={50} /> */}
+                <div className="grid flex-1 text-left text-sm leading-tight font-[family-name:var(--font-poppins)]">
+                  <span className="font-semibold">BackTrading</span>
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
-                </div>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -180,7 +171,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

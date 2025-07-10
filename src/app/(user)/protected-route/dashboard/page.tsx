@@ -2,18 +2,34 @@
 
 "use client";
 import React, { memo } from "react";
-import DraggableNote from "@/components/ui/sticky-note";
+import IntroductionWidget from "./widgets/introduction.widget";
+// import { taskData } from "@/mocks/data";
+import TodoWidget from "./widgets/todo.widget";
+import NotesWidget from "./widgets/notes.widget";
+import TaskWidget from "./widgets/task.widget";
+
+
 
 const Dashboard = () => {
+  // stickyboard widget
+  // const filteredTaskData = taskData.map(task => ({ ...task, dueDate: task.dueDate || '' }));
   return (
     <div
-      className="w-full flex-col justify-center gap-5 items-center m-auto"
+      className="w-screen h-screen container mt-12 justify-center space-y-8  items-center m-auto"
     >
-      
+      <IntroductionWidget />
       <div>
-        <DraggableNote limit={3} />
+        <NotesWidget />
       </div>
-    </div>
+      <div className="w-full flex">
+        <div className="w-fit">
+          <TodoWidget />
+        </div>
+        <div className="w-[50rem] ">
+          <TaskWidget />
+        </div>
+      </div>
+    </div >
   );
 };
 
