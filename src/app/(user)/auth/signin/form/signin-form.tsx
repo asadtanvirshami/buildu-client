@@ -24,7 +24,7 @@ import { LucideLoaderCircle } from "lucide-react";
 import React from "react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { loginSuccess } from "@/redux/actions/user-action";
+import { loginSuccess } from "@/redux/slices/user/user-slice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
@@ -118,7 +118,9 @@ export const SignInForm = () => {
    * @param {GoogleCredentialResponse} credentialResponse Response from Google
    * @returns {Promise<void>}
    */
-  const handleGoogleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
+  const handleGoogleSuccess = async (
+    credentialResponse: GoogleCredentialResponse
+  ) => {
     if (!credentialResponse?.credential) return;
 
     const googleCredentials = credentialResponse.credential;
@@ -147,7 +149,7 @@ export const SignInForm = () => {
               });
             },
           });
-        }
+        },
       }
     );
   };
@@ -167,7 +169,6 @@ export const SignInForm = () => {
         });
       },
     });
-
   };
 
   return (
@@ -233,8 +234,6 @@ export const SignInForm = () => {
                 />
               </div>
             </div>
-
-
           </form>
         </Form>
         <Separator className="my-3" />

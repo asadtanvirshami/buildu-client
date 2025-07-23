@@ -16,8 +16,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Backtesting",
-  description: "A comprehensive backtesting platform with advanced features.",
+  title: "BuildU",
+  description: "A comprehensive platform for project management and collaboration.",
 };
 
 export default function RootLayout({

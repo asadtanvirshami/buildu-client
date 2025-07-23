@@ -8,6 +8,7 @@ import StoreProvider from "@/redux/store-provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Header from "../header";
 import Footer from "../footer";
+import AppHeader from "./app-header";
 
 export default function MainLayout({
   children,
@@ -35,9 +36,21 @@ export default function MainLayout({
       <StoreProvider>
         <ReactQueryClientProvider>
           <SidebarProvider>
-            <AppSidebar />
-            <SidebarTrigger />
-            {children}
+            <div className="flex h-screen w-screen overflow-hidden">
+              {/* Sidebar */}
+              <AppSidebar />
+
+              {/* Main Content Area */}
+              <div className="flex flex-col flex-1 overflow-hidden">
+                {/* Header */}
+                <AppHeader />
+
+                {/* Page Content */}
+                <main className="flex-1 overflow-auto p-4">
+                  {children}
+                </main>
+              </div>
+            </div>
           </SidebarProvider>
         </ReactQueryClientProvider>
       </StoreProvider>

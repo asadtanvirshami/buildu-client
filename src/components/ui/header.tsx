@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useTheme } from "next-themes";
 import { ModeToggle } from "./theme-provider/toggle-button";
 
@@ -14,13 +13,11 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-// import dark_logo from "../../../public/assets/dark.png";
-// import light_logo from "../../../public/assets/light.png";
 import LanguageSwitcher from "./language-switcher";
 import { Button } from "./button";
 
 const Header = () => {
-  const { theme } = useTheme();
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
