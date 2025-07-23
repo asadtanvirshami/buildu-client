@@ -2,16 +2,22 @@
 
 "use client";
 import React, { memo } from "react";
-import DraggableNote from "@/components/ui/sticky-note";
+// import { taskData } from "@/mocks/data";
+import NotesWidget from "./widgets/notes.widget";
+import ListWidget from "./widgets/task.widget";
 
 const Dashboard = () => {
+  // stickyboard widget
+  // const filteredTaskData = taskData.map(task => ({ ...task, dueDate: task.dueDate || '' }));
   return (
-    <div
-      className="w-full flex-col justify-center gap-5 items-center m-auto"
-    >
-      
+    <div className="w-full h-screen container justify-center space-y-8  items-center m-auto">
       <div>
-        <DraggableNote limit={3} />
+        <NotesWidget />
+      </div>
+      <div className="w-full flex">
+        <div className="w-full ">
+          <ListWidget />
+        </div>
       </div>
     </div>
   );

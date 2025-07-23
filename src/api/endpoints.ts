@@ -1,20 +1,18 @@
 export const apiEndpoints = {
   auth: {
-    login: "/auth/login",
+    signin: "/auth/signin",
+    google: "/auth/google-signin",
     logout: "/auth/logout",
     signup: "/auth/signup",
     verifyOtp: "/auth/verify-otp",
     resendOtp: "/auth/resend-otp",
     reset: "/auth/reset",
     account_recovery: "/auth/account-recovery",
-  },
-  me: "/auth/me",
-  notes: {
-    base: "/notes",
-    one: (id: string) => `/notes/${id}`,
+    me: "/auth/me",
   },
   users: {
     base: "/users",
+    me: "/users/me",
     one: (id: string) => `/users/${id}`,
   },
 };

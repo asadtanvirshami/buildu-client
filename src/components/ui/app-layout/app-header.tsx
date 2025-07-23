@@ -1,26 +1,26 @@
-// import React from "react";
-// import { SidebarTrigger } from "../sidebar";
+import React from "react";
+import { SidebarTrigger } from "../sidebar";
 
-// const NofitifcationButton = () => {
-//   return <div>Nofitifcation</div>;
-// };
+const NofitifcationButton = () => {
+  return <div>Nofitifcation</div>;
+};
 
-// const ProfileButton = () => {
-//   return <div>Nofitifcation</div>;
-// };
+const ProfileButton = () => {
+  return <div>Nofitifcation</div>;
+};
 
-// const LogoutButton = () => {
-//   return <div>Nofitifcation</div>;
-// };
+const LogoutButton = () => {
+  return <div>Nofitifcation</div>;
+};
 
-// const AppHeader = () => {
-//   return (
-//     <div className="w-full h-9">
-//       <div className="w-full h-full">
-//         <SidebarTrigger />
-//       </div>
-//     </div>
-//   );
-// };
+const AppHeader = () => {
+  return (
+    <div className="w-full h-9">
+      <div className="w-full h-full flex items-center justify-between px-4 shadow-md">
+        <SidebarTrigger />
+      </div>
+    </div>
+  );
+};
 
-// export default AppHeader;
+export default AppHeader;
